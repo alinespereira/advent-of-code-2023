@@ -1,5 +1,6 @@
-module AoC.Day01 where
+module AoC.Day01 (runAll) where
 
+import AoC (run)
 import Data.Char (digitToInt, isDigit)
 import Data.List (isPrefixOf)
 
@@ -39,3 +40,10 @@ solvePart01 = sum . map (findCalibrationValue . findDigits)
 
 solvePart02 :: [String] -> Int
 solvePart02 = sum . map (findCalibrationValue . findAllDigits)
+
+runAll :: IO ()
+runAll = do
+  testData <- testInput
+  input <- dataInput
+  putStrLn "Day 01"
+  run testData input solvePart01 solvePart02
