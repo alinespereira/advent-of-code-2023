@@ -89,6 +89,5 @@ runAll :: IO ()
 runAll = do
   testData <- testInput
   input <- dataInput
-  let game = parseLine $ head testData
   putStrLn "Day 02"
   run testData input solvePart01 solvePart02
