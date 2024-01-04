@@ -32,9 +32,6 @@ splitAtChar c s =
       rest = strip (== c) $ dropWhile (/= c) s
    in sub : splitAtChar c rest
 
-{-
-  Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
--}
 parseLine :: String -> Game
 parseLine line =
   let game : sets : _ = map (strip isSpace) $ splitAtChar ':' line
@@ -95,9 +92,3 @@ runAll = do
   let game = parseLine $ head testData
   putStrLn "Day 02"
   run testData input solvePart01 solvePart02
-
--- putStrLn $ head testData
--- print $ getId game
--- print $ map show $ getRuns game
-
--- run testData input solvePart01 solvePart02
