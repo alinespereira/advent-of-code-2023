@@ -45,5 +45,5 @@ runAll :: IO ()
 runAll = do
   testData <- testInput
   input <- dataInput
-  putStrLn "Day 01"
+  putStrLn "Day 03"
   run testData input solvePart01 solvePart02
