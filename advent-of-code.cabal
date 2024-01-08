@@ -1,0 +1,59 @@
+cabal-version:      3.0
+name:               advent-of-code
+version:            0.1.0.0
+-- synopsis:
+-- description:
+homepage:           https://github.com/alinespereira/advent-of-code-2023
+license:            MIT
+license-file:       LICENSE
+author:             Aline Pereira
+maintainer:         aline@datagurl.io
+-- copyright:
+category:           Development
+build-type:         Simple
+data-dir:           data
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common shared-properties
+  default-language:   Haskell2010
+  build-depends:      base ^>=4.15.1.0
+                    , containers
+  ghc-options:        -Wall
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+                    , shared-properties
+    exposed-modules:  AoC
+                    , AoC.Day01
+                    , AoC.Day02
+                    , AoC.Day03
+                    , AoC.Day04
+    hs-source-dirs:   src
+
+executable advent-of-code
+    import:           warnings
+                    , shared-properties
+    main-is:          Main.hs
+    build-depends:    advent-of-code
+
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+test-suite advent-of-code-test
+    import:           warnings
+                    , shared-properties
+    other-modules:    SpecHelper
+                    , AoC.Day01Spec
+                    , AoC.Day02Spec
+                    , AoC.Day03Spec
+                    , AoC.Day04Spec
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Spec.hs
+    build-depends:    hspec 
+                    , hspec-discover
+                    , advent-of-code

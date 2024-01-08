@@ -1,15 +1,17 @@
-module AoC.Day03 where
+module AoC.Day03 (testInput, 
+                  dataInput,
+                  solvePart01,
+                  solvePart02) where
 
-import AoC (run)
 import Data.Char (isDigit)
 import Data.List (partition)
 import Data.Maybe (isJust, mapMaybe)
 
 testInput :: IO [String]
-testInput = lines <$> readFile "AoC/Day03/test.txt"
+testInput = lines <$> readFile "Day03/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "AoC/Day03/data.txt"
+dataInput = lines <$> readFile "Day03/data.txt"
 
 data Position = Position
   { getRow :: Int,
@@ -125,19 +127,3 @@ solvePart02 input =
       gearFstNumbers = map (getNumber . fst) gears
       gearSndNumbers = map (getNumber . snd) gears
    in sum $ zipWith (*) gearFstNumbers gearSndNumbers
-
-runAll :: IO ()
-runAll = do
-  testData <- testInput
-  input <- dataInput
-  putStrLn "Day 03"
-
-  let numbers = concat $ zipWith parseLineNumbers [0 ..] testData
-  let symbols = concat $ zipWith parseLineSymbols [0 ..] testData
-
-  -- -- print $ head numbers
-  -- -- print $ head symbols
-  -- let pos = getSpan $ head numbers
-  -- print $ isPartNumber eightNeighbours symbols $ head numbers
-
-  run testData input solvePart01 solvePart02

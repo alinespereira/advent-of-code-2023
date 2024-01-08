@@ -1,14 +1,16 @@
-module AoC.Day01 (runAll) where
+module AoC.Day01 (testInput, 
+                  dataInput,
+                  solvePart01,
+                  solvePart02) where
 
-import AoC (run)
 import Data.Char (digitToInt, isDigit)
 import Data.List (isPrefixOf)
 
 testInput :: IO [String]
-testInput = lines <$> readFile "AoC/Day01/test.txt"
+testInput = lines <$> readFile "Day01/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "AoC/Day01/data.txt"
+dataInput = lines <$> readFile "Day01/data.txt"
 
 findDigits :: String -> [Char]
 findDigits = filter isDigit
@@ -40,10 +42,3 @@ solvePart01 = sum . map (findCalibrationValue . findDigits)
 
 solvePart02 :: [String] -> Int
 solvePart02 = sum . map (findCalibrationValue . findAllDigits)
-
-runAll :: IO ()
-runAll = do
-  testData <- testInput
-  input <- dataInput
-  putStrLn "Day 03"
-  run testData input solvePart01 solvePart02

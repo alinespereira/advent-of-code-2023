@@ -1,16 +1,18 @@
-module AoC.Day02 where
+module AoC.Day02 (testInput, 
+                  dataInput,
+                  solvePart01,
+                  solvePart02) where
 
-import AoC (run)
 import Data.Char
 import Data.List
 import qualified Data.Map as Map
 import Data.Maybe (fromMaybe)
 
 testInput :: IO [String]
-testInput = lines <$> readFile "AoC/Day02/test.txt"
+testInput = lines <$> readFile "Day02/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "AoC/Day02/data.txt"
+dataInput = lines <$> readFile "Day02/data.txt"
 
 data Draw = Draw
   { getRed :: Maybe Int,
@@ -84,10 +86,3 @@ solvePart02 = sum . map (gamePower . parseLine)
           green = maximum $ map (fromMaybe 0 . getGreen) draws
           blue = maximum $ map (fromMaybe 0 . getBlue) draws
        in red * green * blue
-
-runAll :: IO ()
-runAll = do
-  testData <- testInput
-  input <- dataInput
-  putStrLn "Day 02"
-  run testData input solvePart01 solvePart02

@@ -1,14 +1,16 @@
-module AoC.Day04 where
+module AoC.Day04 (testInput, 
+                  dataInput,
+                  solvePart01,
+                  solvePart02) where
 
-import AoC (run)
 import Data.Char (isDigit)
 import Data.List (elem, elemIndex, sort)
 
 testInput :: IO [String]
-testInput = lines <$> readFile "AoC/Day04/test.txt"
+testInput = lines <$> readFile "Day04/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "AoC/Day04/data.txt"
+dataInput = lines <$> readFile "Day04/data.txt"
 
 data Card = Card
   { getId :: Int,
@@ -71,17 +73,3 @@ solvePart02 input =
   let cards = map parseCard input
       won = wonScratchCards cards
    in sum $ map (\c -> count (== c) won) cards
-
-runAll :: IO ()
-runAll = do
-  testData <- testInput
-  input <- dataInput
-  putStrLn "Day 04"
-
-  let cards = map parseCard testData
-  let won = wonScratchCards cards
-  let scores = map (\c -> count (== c) won) cards
-  putStrLn $ unlines $ map show $ take 10 $ sort won
-  putStrLn $ unlines $ map show scores
-
-  run testData input solvePart01 solvePart02
