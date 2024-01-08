@@ -8,9 +8,9 @@ spec :: Spec
 spec =
   describe "Day 01" $ do
     it "solves part 1" $ do
-      solution <- solvePart01 <$> testInput
-      solution `shouldBe` 142
+      solutionPart01 <- (solvePart01 . fst) <$> testInput
+      solutionPart01 `shouldBe` 142
 
     it "solves part 2" $ do
-      solution <- solvePart02 <$> testInput
-      solution `shouldBe` 281
+      solutionPart02 <- (solvePart02 . snd) <$> testInput
+      solutionPart02 `shouldBe` 281

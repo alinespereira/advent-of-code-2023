@@ -5,13 +5,15 @@ module AoC.Day03 (testInput,
 
 import Data.Char (isDigit)
 import Data.List (partition)
-import Data.Maybe (isJust, mapMaybe)
+import Data.Maybe (mapMaybe)
+
+import AoC (readLines)
 
 testInput :: IO [String]
-testInput = lines <$> readFile "Day03/test.txt"
+testInput = readLines "data/Day03/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "Day03/data.txt"
+dataInput = readLines "data/Day03/data.txt"
 
 data Position = Position
   { getRow :: Int,

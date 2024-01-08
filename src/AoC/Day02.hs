@@ -8,11 +8,13 @@ import Data.List
 import qualified Data.Map as Map
 import Data.Maybe (fromMaybe)
 
+import AoC (readLines)
+
 testInput :: IO [String]
-testInput = lines <$> readFile "Day02/test.txt"
+testInput = readLines "data/Day02/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "Day02/data.txt"
+dataInput = readLines "data/Day02/data.txt"
 
 data Draw = Draw
   { getRed :: Maybe Int,

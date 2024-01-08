@@ -1,15 +1,7 @@
-module AoC
-  ( module Day01,
-    module Day02,
-    module Day03,
-    module Day04,
-  )
-where
+module AoC where
 
-import qualified AoC.Day01 as Day01
-import qualified AoC.Day02 as Day02
-import qualified AoC.Day03 as Day03
-import qualified AoC.Day04 as Day04
+readLines :: String -> IO [String]
+readLines p = lines <$> readFile p
 
 -- type Solver = [String] -> Int
 

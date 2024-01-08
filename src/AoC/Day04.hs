@@ -6,11 +6,13 @@ module AoC.Day04 (testInput,
 import Data.Char (isDigit)
 import Data.List (elem, elemIndex, sort)
 
+import AoC (readLines)
+
 testInput :: IO [String]
-testInput = lines <$> readFile "Day04/test.txt"
+testInput = readLines "data/Day04/test.txt"
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "Day04/data.txt"
+dataInput = readLines "data/Day04/data.txt"
 
 data Card = Card
   { getId :: Int,

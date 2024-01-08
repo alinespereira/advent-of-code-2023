@@ -6,11 +6,16 @@ module AoC.Day01 (testInput,
 import Data.Char (digitToInt, isDigit)
 import Data.List (isPrefixOf)
 
-testInput :: IO [String]
-testInput = lines <$> readFile "Day01/test.txt"
+import AoC (readLines)
+
+testInput :: IO ([String], [String])
+testInput = do
+  test01 <- readLines "data/Day01/test01.txt"
+  test02 <- readLines "data/Day01/test02.txt"
+  return (test01, test02)
 
 dataInput :: IO [String]
-dataInput = lines <$> readFile "Day01/data.txt"
+dataInput = readLines "data/Day01/data.txt"
 
 findDigits :: String -> [Char]
 findDigits = filter isDigit
