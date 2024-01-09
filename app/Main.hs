@@ -26,10 +26,10 @@ main = do
   putStrLn =<< runAll Day01.dataInput Day01.solvePart01 Day01.solvePart02
 
   putStrLn "Day 02"
-  putStrLn =<< runAll Day02.dataInput Day02.solvePart01 Day01.solvePart02
+  putStrLn =<< runAll Day02.dataInput Day02.solvePart01 Day02.solvePart02
   
   putStrLn "Day 03"
-  putStrLn =<< runAll Day03.dataInput Day03.solvePart01 Day01.solvePart02
+  putStrLn =<< runAll Day03.dataInput Day03.solvePart01 Day03.solvePart02
   
   putStrLn "Day 04"
-  putStrLn =<< runAll Day04.dataInput Day04.solvePart01 Day01.solvePart02
+  putStrLn =<< runAll Day04.dataInput Day04.solvePart01 Day04.solvePart02

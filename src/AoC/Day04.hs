@@ -8,7 +8,7 @@ where
 
 import AoC (readLines)
 import Data.Char (isDigit)
-import Data.List (elemIndex, sort)
+import Data.List (elemIndex, group, sort)
 import Data.Maybe (fromJust)
 import qualified Data.Map as M
 
@@ -48,32 +48,24 @@ scoreCard :: Card -> Int
 scoreCard card =
   let matches = countMatches card
       matchesAfterFirst = max 0 (matches - 1)
-      afterFirstScores = map (2 ^) [0 ..]
+      afterFirstScores = map (2 ^) [0 :: Int ..]
       scores = 1 : take matchesAfterFirst afterFirstScores
    in sum $ take matches scores
 
-wonScratchCards :: [Card] -> M.Map Card Int
+wonScratchCards :: [Card] -> M.Map Int Int
 wonScratchCards cards =
-  let sortedCards = sort cards
-      acc = M.fromList $ zip cards [1 ..]
-    in wonScratchCards' sortedCards acc
+  let cardIds = map getId cards
+      acc = M.fromList $ zip cardIds (repeat 1)
+    in wonScratchCards' cards acc
 
-wonScratchCards' :: [Card] -> M.Map Card Int -> M.Map Card Int
+wonScratchCards' :: [Card] -> M.Map Int Int -> M.Map Int Int
 wonScratchCards' [] acc = acc
 wonScratchCards' (c : cs) acc =
   let matches = countMatches c
-      wonCards = take matches cs
-      wons = read (fromJust $ M.lookup c acc) :: Int
-      newAcc = updateWonScratchCards wonCards wons acc
-   in wonScratchCards' cs acc
-
-
-updateWonScratchCards :: [Card] -> Int -> M.Map Card Int -> M.Map Card Int
-updateWonScratchCards [] _ acc = acc
-updateWonScratchCards (c : cs) n acc =
-  let newAcc = M.inserWith (+) c n acc
-    in updateWonScratchCards cs n newAcc
-  
+      wonCardIds = map getId $ take matches cs
+      reps = fromJust $ M.lookup (getId c) acc
+      newAcc = foldl (\acc' wId -> M.insertWith (+) wId reps acc') acc wonCardIds
+    in wonScratchCards' cs newAcc
 
 splitAtCharOnce :: Char -> String -> (String, String)
 splitAtCharOnce c s =
@@ -82,9 +74,6 @@ splitAtCharOnce c s =
     Just i ->
       let (s', _ : rest) = splitAt i s
        in (s', rest)
-
-count :: (a -> Bool) -> [a] -> Int
-count f xs = length $ filter f xs
 
 solvePart01 :: [String] -> Int
 solvePart01 = sum . map (scoreCard . parseCard)
