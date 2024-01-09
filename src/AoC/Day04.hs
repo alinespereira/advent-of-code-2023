@@ -1,12 +1,16 @@
-module AoC.Day04 (testInput, 
-                  dataInput,
-                  solvePart01,
-                  solvePart02) where
-
-import Data.Char (isDigit)
-import Data.List (elem, elemIndex, sort)
+module AoC.Day04
+  ( testInput,
+    dataInput,
+    solvePart01,
+    solvePart02,
+  )
+where
 
 import AoC (readLines)
+import Data.Char (isDigit)
+import Data.List (elemIndex, sort)
+import Data.Maybe (fromJust)
+import qualified Data.Map as M
 
 testInput :: IO [String]
 testInput = readLines "data/Day04/test.txt"
@@ -48,13 +52,28 @@ scoreCard card =
       scores = 1 : take matchesAfterFirst afterFirstScores
    in sum $ take matches scores
 
-wonScratchCards :: [Card] -> [Card]
-wonScratchCards [] = []
-wonScratchCards (c : cs) =
+wonScratchCards :: [Card] -> M.Map Card Int
+wonScratchCards cards =
+  let sortedCards = sort cards
+      acc = M.fromList $ zip cards [1 ..]
+    in wonScratchCards' sortedCards acc
+
+wonScratchCards' :: [Card] -> M.Map Card Int -> M.Map Card Int
+wonScratchCards' [] acc = acc
+wonScratchCards' (c : cs) acc =
   let matches = countMatches c
-      won = take matches cs
-      cs' = sort $ won ++ dropWhile (== c) cs
-   in c : wonScratchCards cs'
+      wonCards = take matches cs
+      wons = read (fromJust $ M.lookup c acc) :: Int
+      newAcc = updateWonScratchCards wonCards wons acc
+   in wonScratchCards' cs acc
+
+
+updateWonScratchCards :: [Card] -> Int -> M.Map Card Int -> M.Map Card Int
+updateWonScratchCards [] _ acc = acc
+updateWonScratchCards (c : cs) n acc =
+  let newAcc = M.inserWith (+) c n acc
+    in updateWonScratchCards cs n newAcc
+  
 
 splitAtCharOnce :: Char -> String -> (String, String)
 splitAtCharOnce c s =
@@ -74,4 +93,4 @@ solvePart02 :: [String] -> Int
 solvePart02 input =
   let cards = map parseCard input
       won = wonScratchCards cards
-   in sum $ map (\c -> count (== c) won) cards
+   in sum $ M.elems won
