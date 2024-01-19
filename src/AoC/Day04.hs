@@ -8,7 +8,7 @@ where
 
 import AoC (readLines)
 import Data.Char (isDigit)
-import Data.List (elemIndex, group, sort)
+import Data.List (elemIndex)
 import Data.Maybe (fromJust)
 import qualified Data.Map as M
 

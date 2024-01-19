@@ -83,8 +83,7 @@ findGears :: [Offset] -> [Number] -> Symbol -> Maybe (Number, Number)
 findGears offsets numbers (Symbol _ pos) =
   let neighbours = findNeighbours offsets pos
       isGearPart :: [Position] -> Number -> Bool
-      isGearPart neighbours (Number _ pos) =
-        any (`elem` neighbours) pos
+      isGearPart ns (Number _ p) = any (`elem` ns) p
       gearParts = filter (isGearPart neighbours) numbers
       isGearParts = length gearParts == 2
    in if isGearParts then Just (head gearParts, last gearParts) else Nothing
@@ -105,15 +104,15 @@ splitPoints currentPos =
    in 0 : midPoints ++ [lastIndex]
 
 splitAtMany :: [Int] -> [a] -> [[a]]
-splitAtMany ps xs = splitAtManyLength takeLen xs
+splitAtMany ps = splitAtManyLength takeLen
   where
     takeLen = zipWith (-) (tail ps) ps
     splitAtManyLength :: [Int] -> [a] -> [[a]]
     splitAtManyLength _ [] = []
     splitAtManyLength [] xs = [xs]
-    splitAtManyLength (p : ps) xs =
+    splitAtManyLength (p : ps') xs =
       let (first, rest) = splitAt p xs
-       in first : splitAtManyLength ps rest
+       in first : splitAtManyLength ps' rest
 
 solvePart01 :: [String] -> Int
 solvePart01 input =

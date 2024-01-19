@@ -1,4 +1,5 @@
-run = "{ echo main ; cat - ; } | HSPEC_COLOR=yes cabal test --test-show-details=direct"
+# run = "{ echo main ; cat - ; } | HSPEC_COLOR=yes cabal test --test-show-details=direct"
+run = "HSPEC_COLOR=yes ghcid --color=always --test='cabal test'"
 entrypoint = "Main.hs"
 
 hidden = [".ghci", "ghci_wrapper.sh"]
