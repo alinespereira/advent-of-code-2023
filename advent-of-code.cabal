@@ -18,6 +18,8 @@ common shared-properties
   default-language:   Haskell2010
   build-depends:      base ^>=4.15.1.0
                     , containers
+                    , parsec
+                    , range
   ghc-options:        -Wall
 
 common warnings
@@ -31,6 +33,8 @@ library
                     , AoC.Day02
                     , AoC.Day03
                     , AoC.Day04
+                    , AoC.Day05
+                    , AoC.Day06
     hs-source-dirs:   src
 
 executable advent-of-code
@@ -50,6 +54,8 @@ test-suite advent-of-code-test
                     , AoC.Day02Spec
                     , AoC.Day03Spec
                     , AoC.Day04Spec
+                    , AoC.Day05Spec
+                    , AoC.Day06Spec
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test
     main-is:          Spec.hs
