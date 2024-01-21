@@ -41,33 +41,46 @@ parseNetwork :: [String] -> Network
 parseNetwork = M.fromList . map parseNode
 
 parseNode :: String -> (String, (String, String))
-parseNode = asEntry . words . filter (`elem` uppercase ++ space)
+parseNode = asEntry . words . filter (`elem` validKeyChars)
   where
     uppercase = ['A' .. 'Z']
     space = [' ']
+    digit = ['0' .. '9']
+    validKeyChars = uppercase ++ space ++ digit
     asEntry :: [String] -> (String, (String, String))
     asEntry [node, left, right] = (node, (left, right))
     asEntry _ = error "Invalid node"
 
-walkPath :: String -> String -> [Mode] -> Network -> [(String, String)]
-walkPath from to modes = go from to (cycle modes)
+walkUntil :: String -> 
+             (String -> Bool) ->
+             [Mode] -> 
+             Network -> 
+             [(String, Int)]
+walkUntil _ _  [] _ = error "No modes provided"
+walkUntil from stop modes network = 
+  go from stop (cycle modes') network
   where
+    modes' = zip modes [0..]
     go _ _ [] _ = error "No path"
-    go f t (m:ms) net
-      | f == t = [(f, t)]
+    go f s ((m, i):ms) net
+      | s f = [(f, i)]
       | otherwise = 
         let f' = step f m net
-          in (f, f') : go f' t ms net
+          in (f, i) : go f' s ms net
 
-ghostWalk :: [String] -> [String] -> [Mode] -> Network -> [([String], [String])]
-ghostWalk froms tos modes = ghostGo froms tos (cycle modes)
+walk :: String -> String -> [Mode] -> Network -> [(String, Int)]
+walk from to = walkUntil from (==to)
+
+ghostWalk :: [String] -> [String] -> [Mode] -> Network -> [([String], Mode)]
+ghostWalk froms tos modes network = 
+  (froms, head modes) : ghostGo froms tos (cycle modes) network
   where
     ghostGo _ _ [] _ = error "No path"
     ghostGo fs ts (m:ms) net
-      | and (zipWith (==) fs ts) = [(fs, ts)]
+      | all (`elem` ts) fs = []
       | otherwise =
         let fs' = map (\f -> step f m net) fs
-          in (fs, fs') : ghostGo fs' ts ms net
+          in (fs', m) : ghostGo fs' ts ms net
 
 step :: String -> Mode -> Network -> String
 step node mode net =
@@ -77,12 +90,11 @@ step node mode net =
     ModeRight -> right
 
 solvePart01 :: [String] -> Int
-solvePart01 = 
-  length . uncurry (walkPath "AAA" "ZZZ") . parseInput
+solvePart01 = (`subtract` 1) . length . uncurry (walk "AAA" "ZZZ") . parseInput
 
 solvePart02 :: [String] -> Int
 solvePart02 input =
   let (modes, net) = parseInput input
       fs = filter (\k -> last k == 'A') $ M.keys net
       ts = filter (\k -> last k == 'Z') $ M.keys net
-    in length $ ghostWalk fs ts modes net
+    in (`subtract` 1) $ length $ ghostWalk fs ts modes net
