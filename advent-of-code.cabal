@@ -1,4 +1,4 @@
-cabal-version:      3.0
+cabal-version:      3.8
 name:               advent-of-code
 version:            0.1.0.0
 -- synopsis:
@@ -16,11 +16,12 @@ extra-doc-files:    CHANGELOG.md
 
 common shared-properties
   default-language:   Haskell2010
-  build-depends:      base ^>=4.15.1.0
+  build-depends:      base ==4.16.4.0
                     , containers
                     , parsec
                     , range
   ghc-options:        -Wall
+                      -Wno-incomplete-uni-patterns
 
 common warnings
     ghc-options: -Wall
