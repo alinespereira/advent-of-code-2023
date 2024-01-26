@@ -38,6 +38,7 @@ library
                     , AoC.Day06
                     , AoC.Day07
                     , AoC.Day08
+                    , AoC.Day09
     hs-source-dirs:   src
 
 executable advent-of-code
@@ -61,9 +62,10 @@ test-suite advent-of-code-test
                     , AoC.Day06Spec
                     , AoC.Day07Spec
                     , AoC.Day08Spec
+                    , AoC.Day09Spec
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test
     main-is:          Spec.hs
-    build-depends:    hspec 
+    build-depends:    hspec
                     , hspec-discover
                     , advent-of-code

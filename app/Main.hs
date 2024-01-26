@@ -8,6 +8,7 @@ import qualified AoC.Day05 as Day05
 import qualified AoC.Day06 as Day06
 import qualified AoC.Day07 as Day07
 import qualified AoC.Day08 as Day08
+import qualified AoC.Day09 as Day09
 import qualified Text.Printf as Printf
 
 type Solver = ([String] -> Int)
@@ -48,3 +49,6 @@ main = do
 
   putStrLn "Day 08"
   putStrLn =<< runAll Day08.dataInput Day08.solvePart01 Day08.solvePart02
+
+  putStrLn "Day 09"
+  putStrLn =<< runAll Day09.dataInput Day09.solvePart01 Day09.solvePart02

@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unused-local-binds #-}
+
 module AoC.Day08 where
 
 import AoC (readLines)
